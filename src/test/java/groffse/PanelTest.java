@@ -1,11 +1,14 @@
 package groffse;
 
 import org.junit.Before;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PanelTest {
+import org.junit.Test;
+
+public class PanelTest {
+
 
     @Test
     public void testThatPanelIsBomb() {
