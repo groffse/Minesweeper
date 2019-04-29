@@ -1,14 +1,23 @@
 package groffse;
 
+import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GridTest {
 
+    Grid grid;
+
+    @Before
+    public void setUp() {
+        grid = new Grid();
+    }
 
     @Test
     public void testSetHeight() {
-        Grid grid = new Grid();
         int height = 9;
         grid.setHeight(height);
         assertEquals(height, grid.getHeight());
@@ -16,7 +25,6 @@ public class GridTest {
 
     @Test
     public void testSetWidth() {
-        Grid grid = new Grid();
         int width = 2;
         grid.setWidth(width);
         assertEquals(width, grid.getWidth());
@@ -24,7 +32,6 @@ public class GridTest {
 
     @Test
     public void testSetNumberOfBombs() {
-        Grid grid = new Grid();
         grid.setWidth(10);
         grid.setHeight(10);
         int numberOfBombs = 10;
@@ -34,7 +41,6 @@ public class GridTest {
 
     @Test
     public void testThatExceptionIsThrownWhenNumberOfBombsIsGreaterThanPanels() {
-        Grid grid = new Grid();
         int height = 2;
         int width = 2;
         int numberOfBombs = (height*width) + 1;
@@ -50,21 +56,40 @@ public class GridTest {
     // If height and width does not a equal, an exception should be thrown when we fill the grid with bombs and numbers
     @Test
     public void testThatExcpetionIsThrownWhenGridIsNotSquare(){
-        Grid grid = new Grid();
         grid.setHeight(4);
         grid.setHeight(5);
         IllegalArgumentException thrown =
                 assertThrows(IllegalArgumentException.class,
-                        () -> grid.generateBoard(),
-                        "Grid is not a square. Expected generateBoard to throw");
-        assertTrue(thrown.getMessage().contains("Width and height has to be equal!"));
+                        () -> grid.generateBoard(15),
+                        "Grid is not a square. Expected generateBoard() to throw");
+        assertTrue(thrown.getMessage().contains("Width and height has to be equal and greater than zero!"));
     }
 
     @Test
     public void testReset() {
-        Grid grid = new Grid();
         grid.setHeight(5);
         grid.setWidth(5);
+        grid.reset();
+        assertEquals(0, grid.getFlaggedPanels());
+        assertEquals(0, grid.getRevealedPanels());
     }
 
+    // Test that the panel grid actually contains the number of bombs by counting each panel, and comparing to the numberOfBombs field
+    @Test
+    public void testThatPanelGridContainsNumberOfBombs() {
+        // 4x4 grid
+        grid.setHeight(4);
+        grid.setWidth(4);
+        grid.setNumberOfBombs(5);
+        grid.generateBoard(15);
+        int actualNumberOfBombs = 0;
+        for(ArrayList<Panel> panel_row : grid.getPanelGrid()) {
+            for(Panel panel_index : panel_row) {
+                if(panel_index.isBomb())
+                    actualNumberOfBombs++;
+            }
+        }
+        grid.printPanelGrid();
+        assertEquals(grid.getNumberOfBombs(), actualNumberOfBombs);
+    }
 }

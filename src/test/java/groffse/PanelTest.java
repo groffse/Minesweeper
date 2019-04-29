@@ -12,7 +12,12 @@ public class PanelTest {
 
     @Before
     public void setUp() {
-        panel = new Panel();
+        panel = new Panel(12);
+    }
+
+    @Test
+    public void testConstructor() {
+        assertEquals(12,panel.getID());
     }
 
     @Test

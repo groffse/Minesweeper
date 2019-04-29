@@ -7,6 +7,8 @@ public class Panel {
     private boolean isRevealed; // If true, the panel should reveal the number of adjacent bombs or that it is a bomb
     private boolean isFlagged;
 
+    Panel(int ID) {this.ID = ID;}
+
     public void setBomb(boolean b) {
         isBomb = b;
     }
@@ -27,6 +29,7 @@ public class Panel {
     public void setAdjacentBombs(int adjacentBombs) {this.adjacentBombs = adjacentBombs;}
     public boolean isRevealed() {return isRevealed;}
     public boolean isFlagged () {return isFlagged;}
+    public int getID() {return ID;}
     public void reset() {
         isBomb = false;
         adjacentBombs = 0;
