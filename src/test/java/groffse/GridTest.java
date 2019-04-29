@@ -128,4 +128,30 @@ public class GridTest {
 
         assertEquals(8, grid.getFlagsAdjacentToPanel(1,1));
     }
+
+    @Test
+    public void testGetFlagsAdjacentToPanelWhenZeroFlags() {
+        int height = 5;
+        int width = 5;
+        grid.setHeight(height);
+        grid.setWidth(width);
+        grid.setNumberOfBombs(0);
+        grid.generateBoard(-1);
+        assertEquals(0, grid.getFlagsAdjacentToPanel(1,1));
+    }
+
+    /*Test when given panel is in the four corners of the grid*/
+    @Test
+    public void testGetFlagsAdjacentToPanelEdgeCases() {
+        int height = 5;
+        int width = 5;
+        grid.setHeight(height);
+        grid.setWidth(width);
+        grid.setNumberOfBombs(0);
+        grid.generateBoard(-1);
+        assertEquals(0, grid.getFlagsAdjacentToPanel(0,0));
+        assertEquals(0, grid.getFlagsAdjacentToPanel(0,width-1));
+        assertEquals(0, grid.getFlagsAdjacentToPanel(height-1,0));
+        assertEquals(0, grid.getFlagsAdjacentToPanel(height-1,width-1));
+    }
 }
