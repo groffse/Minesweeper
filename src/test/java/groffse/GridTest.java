@@ -93,4 +93,39 @@ public class GridTest {
         }
         assertEquals(grid.getNumberOfBombs(), actualNumberOfBombs);
     }
+
+    /*In this case all panels should be revealed since there are no bombs*/
+    @Test
+    public void testThatAllPanelsAreRevealedByFloodFill() {
+        int height = 5;
+        int width = 5;
+        grid.setHeight(height);
+        grid.setWidth(width);
+        grid.setNumberOfBombs(0);
+        grid.generateBoard(-1);
+        grid.floodFill(0,0,0);
+        assertEquals(height*width, grid.getRevealedPanels());
+    }
+
+    /*Manually set eight flags around a panel and see that the function returns eight*/
+    @Test
+    public void testGetFlagsAdjacentToPanel() {
+        int height = 5;
+        int width = 5;
+        grid.setHeight(height);
+        grid.setWidth(width);
+        grid.setNumberOfBombs(0);
+        grid.generateBoard(-1);
+
+        grid.getPanelGrid().get(0).get(0).setFlag();
+        grid.getPanelGrid().get(0).get(1).setFlag();
+        grid.getPanelGrid().get(0).get(2).setFlag();
+        grid.getPanelGrid().get(1).get(0).setFlag();
+        grid.getPanelGrid().get(1).get(2).setFlag();
+        grid.getPanelGrid().get(2).get(0).setFlag();
+        grid.getPanelGrid().get(2).get(1).setFlag();
+        grid.getPanelGrid().get(2).get(2).setFlag();
+
+        assertEquals(8, grid.getFlagsAdjacentToPanel(1,1));
+    }
 }

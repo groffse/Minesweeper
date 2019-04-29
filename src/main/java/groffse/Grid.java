@@ -11,8 +11,6 @@ public class Grid {
     private int width;
     private int height;
     private int numberOfBombs;
-    private int flaggedPanels;
-    private int revealedPanels;
 
     /*Public methods*/
 
@@ -29,8 +27,6 @@ public class Grid {
                 panel_index.reset();
             }
         }
-        flaggedPanels = 0;
-        revealedPanels = 0;
     }
 
     public void setHeight(int height) {
@@ -56,11 +52,25 @@ public class Grid {
     }
 
     public int getFlaggedPanels() {
+        int flaggedPanels = 0;
+        for(ArrayList<Panel> panel_row : panel_grid) {
+            for(Panel panel_index : panel_row) {
+                if(panel_index.isRevealed())
+                    flaggedPanels++;
+            }
+        }
         return flaggedPanels;
     }
 
     public int getRevealedPanels() {
-        return flaggedPanels;
+        int revealedPanels = 0;
+        for(ArrayList<Panel> panel_row : panel_grid) {
+            for(Panel panel_index : panel_row) {
+                if(panel_index.isRevealed())
+                    revealedPanels++;
+            }
+        }
+        return revealedPanels;
     }
 
     // Returns a shallow copy of panel grid
@@ -68,8 +78,43 @@ public class Grid {
         return new ArrayList<ArrayList<Panel>>(panel_grid);
     }
 
-    public void floodFill() {
+    public void floodFill(int i, int j, int lastV) {
+        // Make sure we are not out of bounds
+        if( (j < width && j >= 0) && ( i < height && i >= 0) ) {
+            // If neighbour is zero and not isRevealed()
+            if (panel_grid.get(i).get(j).getAdjacentBombs() == 0 && !panel_grid.get(i).get(j).isRevealed() && !panel_grid.get(i).get(j).isFlagged() && !panel_grid.get(i).get(j).isBomb()) {
 
+                panel_grid.get(i).get(j).reveal();
+                int v = panel_grid.get(i).get(j).getAdjacentBombs();
+                floodFill(i, j+1, v);
+                floodFill(i, j-1, v);
+
+                floodFill(i-1, j+1, v);
+                floodFill(i-1, j-1, v);
+                floodFill(i-1, j, v);
+
+                floodFill(i+1, j, v);
+                floodFill(i+1, j+1, v);
+                floodFill(i+1, j-1, v);
+            }
+
+            else if(panel_grid.get(i).get(j).getAdjacentBombs() != 0 && lastV == 0 && !panel_grid.get(i).get(j).isRevealed() && !panel_grid.get(i).get(j).isFlagged() && !panel_grid.get(i).get(j).isBomb()) {
+                panel_grid.get(i).get(j).reveal();
+                int v = panel_grid.get(i).get(j).getAdjacentBombs();
+                floodFill(i, j+1, v);
+                floodFill(i, j-1, v);
+
+                floodFill(i-1, j+1, v);
+                floodFill(i-1, j-1, v);
+                floodFill(i-1, j, v);
+
+                floodFill(i+1, j, v);
+                floodFill(i+1, j+1, v);
+                floodFill(i+1, j-1, v);
+            }
+
+        }
+        return;
     }
 
     public void generateBoard(int skip_bomb) {
@@ -191,6 +236,55 @@ public class Grid {
                 }
             }
         }
+    }
+
+    public int getFlagsAdjacentToPanel(int i, int j) {
+
+        int flagsAround = 0;
+
+
+        // TODO: Make boundaries.
+        if(i + 1 < height) {
+            if (panel_grid.get(i + 1).get(j).isFlagged()) {
+                flagsAround++;
+            }
+        }
+        if(i + 1 < height && j + 1 < width) {
+            if (panel_grid.get(i + 1).get(j + 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(i + 1 < height && j-1 >= 0) {
+            if (panel_grid.get(i + 1).get(j - 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(j + 1 < width) {
+            if (panel_grid.get(i).get(j + 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(j-1 >= 0) {
+            if (panel_grid.get(i).get(j - 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(j + 1 < width && i-1 >= 0) {
+            if (panel_grid.get(i - 1).get(j + 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(i-1 >= 0) {
+            if (panel_grid.get(i - 1).get(j).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        if(i-1 >= 0 && j-1 >= 0) {
+            if (panel_grid.get(i - 1).get(j - 1).isFlagged() ) {
+                flagsAround++;
+            }
+        }
+        return flagsAround;
     }
 
     public void printPanelGrid() {
