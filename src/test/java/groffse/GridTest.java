@@ -69,6 +69,8 @@ public class GridTest {
     public void testReset() {
         grid.setHeight(5);
         grid.setWidth(5);
+        grid.setNumberOfBombs(5);
+        grid.generateBoard(15);
         grid.reset();
         assertEquals(0, grid.getFlaggedPanels());
         assertEquals(0, grid.getRevealedPanels());
@@ -89,7 +91,6 @@ public class GridTest {
                     actualNumberOfBombs++;
             }
         }
-        grid.printPanelGrid();
         assertEquals(grid.getNumberOfBombs(), actualNumberOfBombs);
     }
 }

@@ -75,14 +75,18 @@ public class Grid {
     public void generateBoard(int skip_bomb) {
         if( (height != width) || height < 1 || width < 1)
             throw new IllegalArgumentException("Width and height has to be equal and greater than zero!");
+        // We don't want to alter the 2dim array if we continue with the same size
+        if( (height != panel_grid.size()) || (width != panel_grid.get(0).size()) ) {
+            panel_grid.clear();
 
-        int panelID = 0;
+            int panelID = 0;
 
-        for(int i = 0; i < height; i++) {
-            panel_grid.add(new ArrayList<Panel>());
-            for(int j = 0; j < width; j++) {
-                panel_grid.get(i).add(new Panel(panelID));
-                panelID++;
+            for(int i = 0; i < height; i++) {
+                panel_grid.add(new ArrayList<Panel>());
+                for(int j = 0; j < width; j++) {
+                    panel_grid.get(i).add(new Panel(panelID));
+                    panelID++;
+                }
             }
         }
         generate_bomb_positions(skip_bomb);
