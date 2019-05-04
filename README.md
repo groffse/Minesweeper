@@ -6,7 +6,7 @@ Minesweeper made in java
 
 Run the game:
 
-`cd to home directory`
+`cd to project directory`
 
 `mvn compile`
 

@@ -14,7 +14,7 @@ public class Grid {
 
     /*Public methods*/
 
-    Grid() {
+    public Grid() {
         panel_grid = new ArrayList<ArrayList<Panel>>();
         width = 0;
         height = 0;

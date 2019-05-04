@@ -55,11 +55,7 @@ public class MenuScreen extends Screen {
     @Override
     public void prepare() {
         super.prepare();
-        Input.keyboard().onKeyPressed(KeyEvent.VK_ESCAPE, e -> {
-            if (this.isVisible()) {
-                System.exit(0);
-            }
-        });
+        GameController.setGameState(GameState.MAINMENU);
 
     }
 
@@ -99,5 +95,24 @@ public class MenuScreen extends Screen {
         this.exitButton.onClicked(e -> {
             System.exit(0);
         });
+
+
+        this.settingsButton.onClicked(e -> {
+            turnOffMenu();
+            GameController.setGameState(GameState.SETTINGS);
+            Game.screens().display("SETTINGS");
+        });
+
+        this.playButton.onClicked(e -> {
+
+        });
+    }
+
+    // Fade out menu and disable the button
+    private void turnOffMenu() {
+        Game.window().getRenderComponent().fadeOut(1000);
+        this.setVisible(false);
+        Game.screens().display("SETTINGS");
+        Game.window().getRenderComponent().fadeIn(1000);
     }
 }

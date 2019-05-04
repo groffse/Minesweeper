@@ -1,13 +1,13 @@
 package groffse;
+import Graphics.GameController;
 import Graphics.MenuScreen;
+import Graphics.SettingsScreen;
 import de.gurkenlabs.litiengine.*;
 import de.gurkenlabs.litiengine.gui.GuiProperties;
 import de.gurkenlabs.litiengine.gui.screens.Resolution;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class App
 {
@@ -24,6 +24,7 @@ public class App
     {
         Game.init();
         Game.info().setName("Minesweeper");
+        Game.window().setTitle("Minesweeper 2.0");
         Game.window().init(); /*Has to call init() for res variables to be set properly even tho res actual is correct*/
         Game.window().setResolution(Resolution.Ratio16x9.RES_1280x720);
 
@@ -39,7 +40,10 @@ public class App
         GuiProperties.getDefaultAppearanceDisabled().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         GuiProperties.getDefaultAppearanceHovered().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         Game.screens().add(new MenuScreen());
+        Game.screens().add(new SettingsScreen());
         //Game.screens().display("MENU");
         Game.graphics().setBaseRenderScale(4.6f);
+
+        GameController.init();
     }
 }
