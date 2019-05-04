@@ -4,3 +4,5 @@
 
 
 Minesweeper made in java with new dev branch
+
+Execute program with mvn exec:java
