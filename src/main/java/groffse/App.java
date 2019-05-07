@@ -3,6 +3,8 @@ import Graphics.GameController;
 import Graphics.MenuScreen;
 import Graphics.SettingsScreen;
 import de.gurkenlabs.litiengine.*;
+import de.gurkenlabs.litiengine.configuration.GameConfiguration;
+import de.gurkenlabs.litiengine.configuration.GraphicConfiguration;
 import de.gurkenlabs.litiengine.gui.GuiProperties;
 import de.gurkenlabs.litiengine.gui.screens.Resolution;
 import de.gurkenlabs.litiengine.resources.Resources;

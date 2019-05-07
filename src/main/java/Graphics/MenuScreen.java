@@ -3,23 +3,16 @@ package Graphics;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
 import de.gurkenlabs.litiengine.gui.ImageComponent;
+import de.gurkenlabs.litiengine.gui.screens.Resolution;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
-import de.gurkenlabs.litiengine.input.Input;
 import groffse.App;
-import groffse.Settings;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class MenuScreen extends Screen {
 
     public static final String SCREEN_NAME = "MENU";
-    private ImageComponent playButton;
-    private ImageComponent settingsButton;
-    private ImageComponent creditButton;
-    private ImageComponent exitButton;
-
-    private final double MENU_BUTTON_GAP = 70;
+    private MenuButtons menuButtons;
 
     public MenuScreen() {
         super(SCREEN_NAME);
@@ -46,10 +39,6 @@ public class MenuScreen extends Screen {
         double title_nameY = g.getFontMetrics().getHeight() + 30;
         TextRenderer.render(g,title_name,title_nameX,title_nameY);
 
-
-        playButton.setVisible(true);
-        settingsButton.setVisible(true);
-        exitButton.setVisible(true);
         super.render(g);
     }
 
@@ -63,48 +52,36 @@ public class MenuScreen extends Screen {
     @Override
     protected void initializeComponents() {
         super.initializeComponents();
-        double x = Game.window().getCenter().getX();
-        double y = Game.window().getCenter().getY()/2;
 
-        double width = Game.window().getResolution().getWidth() / 3;
-        double height = Game.window().getResolution().getHeight() / 8;
+        menuButtons = new MenuButtons(
+                Resolution.Ratio16x9.RES_1280x720,
+                "PLAY GAME",
+                         "SETTINGS",
+                         "EXIT GAME"
+                                    );
 
-        this.playButton = new ImageComponent(x - width / 2.0, (y + height / 2.0) , width, 60);
-        this.playButton.setText("PLAY GAME");
-        this.playButton.getAppearance().setForeColor(new Color(215,82,82));
-        this.playButton.getAppearanceHovered().setForeColor(new Color(253,184,184));
-
-        this.settingsButton = new ImageComponent(x - width / 2.0, (y + height / 2.0) + MENU_BUTTON_GAP , width, 60);
-        this.settingsButton.setText("SETTINGS");
-        this.settingsButton.getAppearance().setForeColor(new Color(215,82,82));
-        this.settingsButton.getAppearanceHovered().setForeColor(new Color(253,184,184));
-
-        this.exitButton = new ImageComponent(x - width / 2.0, (y + height / 2.0) + MENU_BUTTON_GAP*2, width, 60);
-        this.exitButton.setText("EXIT GAME");
-        this.exitButton.getAppearance().setForeColor(new Color(215,82,82));
-        this.exitButton.getAppearanceHovered().setForeColor(new Color(253,184,184));
-
-        this.getComponents().add(this.playButton);
-        this.getComponents().add(this.settingsButton);
-        this.getComponents().add(this.exitButton);
+        for(ImageComponent button : menuButtons.getMenuButtons()) {
+            this.getComponents().add(button);
+        }
 
         initMenuEvents();
-
     }
 
     private void initMenuEvents() {
-        this.exitButton.onClicked(e -> {
-            System.exit(0);
+
+        // Play button
+        this.getComponents().get(0).onClicked(e -> {
+
         });
-
-
-        this.settingsButton.onClicked(e -> {
+        // Settings button
+        this.getComponents().get(1).onClicked(e -> {
             Game.screens().get("SETTINGS").setVisible(true);
             turnOffMenu();
             GameController.setGameState(GameState.SETTINGS);
         });
-
-        this.playButton.onClicked(e -> {
+        // Exit button
+        this.getComponents().get(2).onClicked(e -> {
+            System.exit(0);
         });
     }
 
