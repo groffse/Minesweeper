@@ -1,15 +1,12 @@
 package Graphics;
 
-import com.sun.xml.internal.ws.api.config.management.policy.ManagementAssertion;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.graphics.TextRenderer;
-import de.gurkenlabs.litiengine.gui.GuiProperties;
 import de.gurkenlabs.litiengine.gui.ImageComponent;
 import de.gurkenlabs.litiengine.gui.TextFieldComponent;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 import de.gurkenlabs.litiengine.input.Input;
 
-import de.gurkenlabs.litiengine.resources.Resource;
 import de.gurkenlabs.litiengine.resources.Resources;
 import groffse.App;
 import groffse.Settings;
