@@ -25,8 +25,8 @@ public class App
         Game.init();
         Game.info().setName("Minesweeper");
         Game.window().setTitle("Minesweeper 2.0");
-        Game.window().init(); /*Has to call init() for res variables to be set properly even tho res actual is correct*/
         Game.window().setResolution(Resolution.Ratio16x9.RES_1280x720);
+
 
         Game.window().getRenderComponent().setCursorOffset(0,0);
         Game.window().getRenderComponent().setCursor(CURSOR_STANDARD);

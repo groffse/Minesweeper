@@ -6,6 +6,7 @@ import de.gurkenlabs.litiengine.gui.ImageComponent;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 import de.gurkenlabs.litiengine.input.Input;
 import groffse.App;
+import groffse.Settings;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -98,13 +99,12 @@ public class MenuScreen extends Screen {
 
 
         this.settingsButton.onClicked(e -> {
+            Game.screens().get("SETTINGS").setVisible(true);
             turnOffMenu();
             GameController.setGameState(GameState.SETTINGS);
-            Game.screens().display("SETTINGS");
         });
 
         this.playButton.onClicked(e -> {
-
         });
     }
 
@@ -112,6 +112,7 @@ public class MenuScreen extends Screen {
     private void turnOffMenu() {
         Game.window().getRenderComponent().fadeOut(1000);
         this.setVisible(false);
+        Game.screens().get("SETTINGS").setVisible(true);
         Game.screens().display("SETTINGS");
         Game.window().getRenderComponent().fadeIn(1000);
     }
