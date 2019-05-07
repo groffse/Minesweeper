@@ -24,19 +24,8 @@ public class SettingsScreen extends Screen {
     private TextFieldComponent grid_height, grid_width;
     private ImageComponent setting_group;
 
-    private double x;
-    private double y;
-
-    private double width;
-    private double height;
-
     public SettingsScreen() {
         super(SCREEN_NAME);
-        x = Game.window().getCenter().getX();
-        y = Game.window().getCenter().getY()/2;
-
-        width = Game.window().getResolution().getWidth() / 3;
-        height = Game.window().getResolution().getHeight() / 8;
     }
 
     @Override
@@ -52,12 +41,17 @@ public class SettingsScreen extends Screen {
         String title_name = "Settings";
         double title_nameX = Game.window().getCenter().getX() - g.getFontMetrics().stringWidth(title_name) / 2.0;
         double title_nameY = g.getFontMetrics().getHeight() + 30;
-        TextRenderer.render(g,title_name,title_nameX,title_nameY);
+        TextRenderer.render(g,title_name,title_nameX+10,title_nameY);
 
         String textNumberOfBombs = "Bombs:";
-        TextRenderer.render(g, textNumberOfBombs, x - width / 2.0 - 55, (y + height / 2.0)+ 42.5);
-
+        double settingsTextX = Game.window().getCenter().getX() - g.getFontMetrics().stringWidth(title_name) / 2.0;
+        double settingsTextY = Game.window().getCenter().getY() / 2;
+        TextRenderer.render(g, textNumberOfBombs, settingsTextX, settingsTextY);
         String textHeight = "Height:";
+        TextRenderer.render(g, textHeight, settingsTextX, settingsTextY + 100);
+
+        String textWidth = "Width:";
+        TextRenderer.render(g, textWidth, settingsTextX, settingsTextY + 200);
 
         super.render(g);
     }
@@ -94,12 +88,14 @@ public class SettingsScreen extends Screen {
     public void initializeComponents() {
         super.initializeComponents();
 
+       double x = Game.window().getCenter().getX();
+       double y = Game.window().getCenter().getY()/2;
 
-        numberOfBombs   = new TextFieldComponent(x - width / 2.0, (y + height / 2.0),width, 60,null, Integer.toString(Settings.numberOfBombs));
-        grid_height     = new TextFieldComponent(x - width / 2.0, (y + height / 2.0)+70,width, 60, null, Integer.toString(Settings.height));
-        grid_width      = new TextFieldComponent(x - width / 2.0, (y + height / 2.0)+140,width, 60, null, Integer.toString(Settings.width));
-        setting_group   = new ImageComponent(400,400, Resources.images().get("res/Settings_overlay.png"));
+        numberOfBombs   = new TextFieldComponent(x,y-43.0,x,60,null, Integer.toString(Settings.numberOfBombs));
+        grid_height     = new TextFieldComponent(x,y+57.0,x,60,null, Integer.toString(Settings.height));
+        grid_width      = new TextFieldComponent(x,y+157.0,x,60,null, Integer.toString(Settings.width));
 
+        setting_group   = new ImageComponent(x-68,y-45,Resources.images().get("res/Settings_overlay.png"));
         this.getComponents().add(numberOfBombs);
         this.getComponents().add(grid_height);
         this.getComponents().add(grid_width);
