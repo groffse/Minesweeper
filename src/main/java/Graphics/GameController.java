@@ -27,7 +27,7 @@ public final class GameController {
 
     }
 
-    public static Iterable<Integer> click(int panelID) {
+    public static Iterable<Pair<Integer,Integer>> click(int panelID) {
         // Handle exceptions here
 
         if(gameStatus == GameStatus.NEW) {
@@ -60,12 +60,15 @@ public final class GameController {
         GameController.gameStatus = gs;
     }
 
-    public static Iterable<Integer> getRevealedPanels() {
-        ArrayList<Integer> revealedList = new ArrayList<>();
+    public static Iterable<Pair<Integer,Integer>> getRevealedPanels() {
+        ArrayList<Pair<Integer,Integer>> revealedList = new ArrayList<>();
         for(ArrayList<Panel> row : panelGrid.getPanelGrid()) {
             for(Panel panel : row) {
                 if(panel.isRevealed()) {
-                    revealedList.add(panel.getID());
+                    Pair<Integer,Integer> id_adj = new Pair<>();
+                    id_adj.first = panel.getID();
+                    id_adj.second = panel.getAdjacentBombs();
+                    revealedList.add(id_adj);
                 }
             }
         }

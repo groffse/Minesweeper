@@ -6,6 +6,7 @@ import de.gurkenlabs.litiengine.gui.ImageComponentList;
 import de.gurkenlabs.litiengine.gui.screens.Screen;
 import de.gurkenlabs.litiengine.input.Input;
 import groffse.Settings;
+import util.Pair;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -69,12 +70,12 @@ public class InGameScreen extends Screen {
         this.initializeComponents();
     }
 
-    public void updateInGamePanelList (Iterable<Integer> list) {
+    public void updateInGamePanelList (Iterable<Pair<Integer,Integer>> list) {
         for(GuiComponent component : this.getComponents()) {
             if(component instanceof PanelComponent) {
-                for(Integer id : list) {
-                    if(((PanelComponent) component).getID() == id) {
-                        ((PanelComponent) component).adjacentBombs = 0;
+                for(Pair<Integer,Integer> id_adj : list) {
+                    if(((PanelComponent) component).getID() == id_adj.first) {
+                        ((PanelComponent) component).adjacentBombs = id_adj.second;
                         ((PanelComponent) component).clicked = true;
                     }
                 }
