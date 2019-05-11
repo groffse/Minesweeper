@@ -62,21 +62,28 @@ public class SettingsScreen extends Screen {
 
                 try{
                     Settings.numberOfBombs = Integer.parseInt(numberOfBombs.getText());
+                    Settings.height = Integer.parseInt(grid_height.getText());
+                    Settings.width = Integer.parseInt(grid_width.getText());
                 }
                 catch(NumberFormatException exception) {
                     // Give user warning
-                    System.out.println("Err: Cannot set number of bombs " + exception.getMessage());
+                    System.out.println(exception.getMessage());
+                    Settings.numberOfBombs = 16;
+                    Settings.height = 5;
+                    Settings.width = 5;
                 }
                 finally {
-                    // Set default
-                    Settings.numberOfBombs = 16;
+                    Game.window().getRenderComponent().fadeOut(1000);
+                    this.setVisible(false);
+                    Game.screens().get("MENU").setVisible(true);
+                    Game.screens().display("MENU");
+                    /*Must be a one-liner for this..*/
+                    if(Game.screens().get("INGAME") instanceof InGameScreen) {
+                        InGameScreen s = (InGameScreen) Game.screens().get("INGAME");
+                        s.update();
+                    }
+                    Game.window().getRenderComponent().fadeIn(1000);
                 }
-
-                Game.window().getRenderComponent().fadeOut(1000);
-                this.setVisible(false);
-                Game.screens().get("MENU").setVisible(true);
-                Game.screens().display("MENU");
-                Game.window().getRenderComponent().fadeIn(1000);
             }
         });
     }

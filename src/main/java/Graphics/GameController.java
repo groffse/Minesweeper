@@ -1,21 +1,47 @@
 package Graphics;
 
 import groffse.Grid;
+import groffse.Panel;
+import groffse.Settings;
+import util.Pair;
+
+import java.util.ArrayList;
 
 /*
 * This beauty is in control of everything!*/
 public final class GameController {
 
-    private static Grid panel_grid;
+    private static Grid panelGrid;
     private static GameState gameState;
     private static GameStatus gameStatus;
 
     public static void init() {
-        panel_grid = new Grid();
+        panelGrid = new Grid();
+        panelGrid.setHeight(Settings.height);
+        panelGrid.setWidth(Settings.width);
+        panelGrid.setNumberOfBombs(Settings.numberOfBombs);
+        gameStatus = GameStatus.NEW;
+    }
+
+    public static void setFlag(int panelID) {
+
+    }
+
+    public static Iterable<Integer> click(int panelID) {
+        // Handle exceptions here
+
+        if(gameStatus == GameStatus.NEW) {
+            panelGrid.generateBoard(panelID);
+            gameStatus = GameStatus.ONGOING;
+        }
+        Pair<Integer,Integer> row_col = IDToPair(panelID);
+        panelGrid.floodFill(row_col.first, row_col.second,0);
+        panelGrid.printPanelGrid();
+        return getRevealedPanels();
     }
 
     public static void restart () {
-        panel_grid.reset();
+        panelGrid.reset();
     }
 
     public static GameState getGameState() {
@@ -26,11 +52,33 @@ public final class GameController {
         GameController.gameState = gs;
     }
 
-    private static GameStatus getGameStatus() {
+    public static GameStatus getGameStatus() {
         return gameStatus;
     }
 
-    private static void setGameStatus(GameStatus gs) {
+    public static void setGameStatus(GameStatus gs) {
         GameController.gameStatus = gs;
+    }
+
+    public static Iterable<Integer> getRevealedPanels() {
+        ArrayList<Integer> revealedList = new ArrayList<>();
+        for(ArrayList<Panel> row : panelGrid.getPanelGrid()) {
+            for(Panel panel : row) {
+                if(panel.isRevealed()) {
+                    revealedList.add(panel.getID());
+                }
+            }
+        }
+        return revealedList;
+    }
+
+    /*Graphic panels returns id. Turn this into a pair of x,y for Grid class*/
+    public static Pair<Integer,Integer> IDToPair(int ID) {
+        int row = ID / panelGrid.getHeight();
+        int column = ID % panelGrid.getWidth();
+        Pair<Integer,Integer> pair = new Pair<>();
+        pair.first = row;
+        pair.second = column;
+        return pair;
     }
 }

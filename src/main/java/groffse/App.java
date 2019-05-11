@@ -2,9 +2,9 @@ package groffse;
 import Graphics.GameController;
 import Graphics.MenuScreen;
 import Graphics.SettingsScreen;
+import Graphics.InGameScreen;
 import de.gurkenlabs.litiengine.*;
-import de.gurkenlabs.litiengine.configuration.GameConfiguration;
-import de.gurkenlabs.litiengine.configuration.GraphicConfiguration;
+
 import de.gurkenlabs.litiengine.gui.GuiProperties;
 import de.gurkenlabs.litiengine.gui.screens.Resolution;
 import de.gurkenlabs.litiengine.resources.Resources;
@@ -18,9 +18,7 @@ public class App
     public static final Font GUI_FONT_SMALL = GUI_FONT.deriveFont(30f);
     public static float HUD_SCALE = 2.0f;
 
-
     public static final Image CURSOR_STANDARD = Resources.images().get("cursor-standard.png");
-
 
     public static void main( String[] args )
     {
@@ -41,6 +39,7 @@ public class App
         GuiProperties.getDefaultAppearanceHovered().setTextAntialiasing(RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         Game.screens().add(new MenuScreen());
         Game.screens().add(new SettingsScreen());
+        Game.screens().add(new InGameScreen());
         //Game.screens().display("MENU");
         Game.graphics().setBaseRenderScale(4.6f);
 

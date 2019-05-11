@@ -71,12 +71,12 @@ public class MenuScreen extends Screen {
 
         // Play button
         this.getComponents().get(0).onClicked(e -> {
-
+            turnOffMenu("INGAME");
+            GameController.setGameState(GameState.INGAME);
         });
         // Settings button
         this.getComponents().get(1).onClicked(e -> {
-            Game.screens().get("SETTINGS").setVisible(true);
-            turnOffMenu();
+            turnOffMenu("SETTINGS");
             GameController.setGameState(GameState.SETTINGS);
         });
         // Exit button
@@ -86,11 +86,11 @@ public class MenuScreen extends Screen {
     }
 
     // Fade out menu and disable the button
-    private void turnOffMenu() {
+    private void turnOffMenu(String next_screen) {
         Game.window().getRenderComponent().fadeOut(1000);
         this.setVisible(false);
-        Game.screens().get("SETTINGS").setVisible(true);
-        Game.screens().display("SETTINGS");
+        Game.screens().get(next_screen).setVisible(true);
+        Game.screens().display(next_screen);
         Game.window().getRenderComponent().fadeIn(1000);
     }
 }

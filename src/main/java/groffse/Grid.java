@@ -291,13 +291,19 @@ public class Grid {
         for(int row = 0; row < height; row++) {
             System.out.print("|");
             for(int column = 0; column < width; column++) {
-                if(panel_grid.get(row).get(column).isBomb())
-                    System.out.print("*|");
+                if(panel_grid.get(row).get(column).isRevealed()) {
+                    if (panel_grid.get(row).get(column).isBomb())
+                        System.out.print("*|");
+                    else {
+                        System.out.print(panel_grid.get(row).get(column).getAdjacentBombs() + "|");
+                    }
+                }
                 else {
-                    System.out.print(panel_grid.get(row).get(column).getAdjacentBombs() + "|");
+                    System.out.print("x|");
                 }
             }
             System.out.println("");
         }
+        System.out.println("_________");
     }
 }
