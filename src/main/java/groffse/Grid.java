@@ -134,6 +134,7 @@ public class Grid {
                 }
             }
         }
+        reset();
         generate_bomb_positions(skip_bomb);
         setAdjacentBombsForPanels();
     }

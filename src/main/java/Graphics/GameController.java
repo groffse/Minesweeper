@@ -31,6 +31,9 @@ public final class GameController {
         // Handle exceptions here
 
         if(gameStatus == GameStatus.NEW) {
+            panelGrid.setHeight(Settings.height);
+            panelGrid.setWidth(Settings.width);
+            panelGrid.setNumberOfBombs(Settings.numberOfBombs);
             panelGrid.generateBoard(panelID);
             gameStatus = GameStatus.ONGOING;
         }
@@ -75,7 +78,7 @@ public final class GameController {
         return revealedList;
     }
 
-    /*Graphic panels returns id. Turn this into a pair of x,y for Grid class*/
+    /*PanelComponent returns id. Turn this into a pair of x,y for Grid class*/
     public static Pair<Integer,Integer> IDToPair(int ID) {
         int row = ID / panelGrid.getHeight();
         int column = ID % panelGrid.getWidth();
