@@ -39,6 +39,12 @@ public class InGameScreen extends Screen {
                 Game.window().getRenderComponent().fadeIn(1000);
             }
         });
+
+        Input.keyboard().onKeyPressed(KeyEvent.VK_R, e -> {
+            // Restart game
+            System.out.println("Restarting game");
+            clearPanels();
+        });
     }
 
     @Override
@@ -83,10 +89,24 @@ public class InGameScreen extends Screen {
         }
     }
 
+    private void clearPanels() {
+        for(GuiComponent component : this.getComponents()) {
+            if(component instanceof  PanelComponent) {
+                ((PanelComponent) component).clicked = false;
+                ((PanelComponent) component).flag = false;
+            }
+        }
+        GameController.restart();
+        GameController.setGameStatus(GameStatus.NEW);
+    }
+
     private void gameEvent() {
         for(PanelComponent pc : panelList) {
             pc.onClicked(e ->{
-                updateInGamePanelList( GameController.click(pc.getID()) );
+                if(e.getEvent().getButton() == 1)
+                    updateInGamePanelList( GameController.click(pc.getID()) );
+                if(e.getEvent().getButton() == 3)
+                    pc.flag = GameController.setFlag(pc.getID());
                 //System.out.println(e.getEvent().getButton()); /*1 is left click and 3 right click*/
             });
         }

@@ -23,10 +23,6 @@ public final class GameController {
         gameStatus = GameStatus.NEW;
     }
 
-    public static void setFlag(int panelID) {
-
-    }
-
     public static Iterable<Pair<Integer,Integer>> click(int panelID) {
         // Handle exceptions here
 
@@ -41,6 +37,22 @@ public final class GameController {
         panelGrid.floodFill(row_col.first, row_col.second,0);
         panelGrid.printPanelGrid();
         return getRevealedPanels();
+    }
+
+    /*Returns true if flag can be set*/
+    public static boolean setFlag(int panelID) {
+        if(gameStatus != GameStatus.ONGOING)
+            return false;
+
+        Pair<Integer,Integer> row_col = IDToPair(panelID);
+        Panel p = panelGrid.getPanelGrid().get(row_col.first).get(row_col.second);
+
+        if(p.isRevealed() || p.isFlagged()) {
+            p.setFlag(false);
+            return false;
+        }
+        p.setFlag(true);
+        return true;
     }
 
     public static void restart () {

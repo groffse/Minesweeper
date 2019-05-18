@@ -1,6 +1,7 @@
 package Graphics;
 
 import de.gurkenlabs.litiengine.gui.GuiComponent;
+import groffse.App;
 
 import java.awt.*;
 import java.util.Random;
@@ -21,9 +22,10 @@ public class PanelComponent extends GuiComponent {
     public int adjacentBombs = 0; /*Negative value is bomb*/
     int posX, posY;
     public boolean clicked = false;
+    public boolean flag;
 
     public PanelComponent(double posX, double posY,int ID) {
-        super(posX,posY,40,40);
+        super(posX,posY-17.5,40,40);
         this.posX = (int)posX;
         this.posY = (int)posY;
         this.ID = ID;
@@ -47,6 +49,10 @@ public class PanelComponent extends GuiComponent {
         if(clicked) {
             g.setColor(Color.WHITE);
             g.drawString(Integer.toString(this.adjacentBombs), posX + (g.getFontMetrics().stringWidth("0")),posY + g.getFontMetrics().getHeight());
+        }
+        if(flag) {
+            g.setColor(Color.GREEN);
+            g.fillRect(posX,posY,40,40);
         }
     }
 
