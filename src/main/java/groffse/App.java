@@ -14,11 +14,11 @@ import java.awt.*;
 public class App
 {
 
-    public static final Font GUI_FONT = Resources.fonts().get("marquee moon.ttf").deriveFont(48f).deriveFont(30f);
+    public static final Font GUI_FONT = Resources.fonts().get("res/marquee moon.ttf").deriveFont(48f).deriveFont(30f);
     public static final Font GUI_FONT_SMALL = GUI_FONT.deriveFont(30f);
     public static float HUD_SCALE = 2.0f;
 
-    public static final Image CURSOR_STANDARD = Resources.images().get("cursor-standard.png");
+    public static final Image CURSOR_STANDARD = Resources.images().get("res/cursor-standard.png");
 
     public static void main( String[] args )
     {
