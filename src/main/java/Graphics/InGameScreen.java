@@ -111,4 +111,9 @@ public class InGameScreen extends Screen {
             });
         }
     }
+
+    /*Should render a text saying user won or lost*/
+    private void renderGameMessage() {
+
+    }
 }
